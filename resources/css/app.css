@@ -1,0 +1,59 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@font-face {
+    font-family: 'IranSans';
+    src: url('./../../public/assets/fonts/iransans/eot/IRANSansWeb.eot');
+    src: url('./../../public/assets/fonts/iransans/eot/IRANSansWeb.eot?#iefix') format('embedded-opentype'),
+    url('./../../public/assets/fonts/iransans/woff2/IRANSansWeb.woff2') format('woff2'),
+    url('./../../public/assets/fonts/iransans/woff/IRANSansWeb.woff') format('woff'),
+    url('./../../public/assets/fonts/iransans/ttf/IRANSansWeb.ttf') format('truetype');
+}
+
+* {
+    font-family: 'IranSans' !important;
+}
+
+.whitespace-pre {
+    white-space: pre-wrap;  /* CSS3 */
+    word-wrap: break-word;  /* For IE */
+}
+.form-group{
+    @apply mb-2;
+}
+[x-cloak] {
+    display: none;
+}
+
+.rtl, input.rtl {
+    direction: rtl !important;
+}
+
+.ltr, input.ltr{
+    direction: ltr !important;
+}
+
+.svg-class {
+    stroke-width: 2; /* این ویژگی را به صورت پیش‌فرض تنظیم کنید */
+}
+
+
+
+.card{
+    @apply w-full p-6 bg-white border border-gray-200 rounded-2xl shadow dark:bg-gray-800 dark:border-gray-500;
+}
+
+.card-v2{
+    @apply w-full bg-white dark:bg-gray-800 dark:border-gray-500 px-6 py-6 rounded-2xl border border-gray-100 shadow-sm relative overflow-hidden;
+}
+
+.btn-first-v1{
+    @apply text-sm bg-first text-white px-5 py-2 rounded-2xl border border-first-400;
+}
+
+.table-v1{
+    @apply w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400 rounded-2xl overflow-hidden;
+}
+.table-head-v1{
+    @apply text-xs text-gray-700 uppercase bg-gray-100 dark:bg-gray-700 dark:text-gray-400;
+}
