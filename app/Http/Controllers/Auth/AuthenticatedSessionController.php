@@ -49,7 +49,7 @@ class AuthenticatedSessionController extends Controller
             if (in_array($userType,UserConstant::TYPE_OPERATORS_ROLES)) {
                 return redirect()->intended(url('/panel/dashboard'));
             } else if (in_array($userType, [UserConstant::TYPE_USER])) {
-                return redirect()->intended(url('/profile?section=personal-information'));
+                return redirect()->intended(url('/'));
             } else {
                 return redirect()->intended(url('/'))->with('server_messages','Unauthorized');
             }
