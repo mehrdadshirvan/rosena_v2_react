@@ -2,6 +2,8 @@
 
 namespace App\Http\Requests\Auth;
 
+use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Auth\Events\Lockout;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
@@ -27,8 +29,8 @@ class LoginRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'email' => ['required', 'string', 'email'],
-            'password' => ['required', 'string'],
+            'mobile' => ['required', 'string', 'numeric','exists:users,mobile'],
+            'verification_code' => ['required', 'numeric','max:999999'],
         ];
     }
 
@@ -40,14 +42,18 @@ class LoginRequest extends FormRequest
     public function authenticate(): void
     {
         $this->ensureIsNotRateLimited();
+        $userID = User::query()->where(['mobile'=>$this->only('mobile')])->value('id');
 
-        if (! Auth::attempt($this->only('email', 'password'), $this->boolean('remember'))) {
-            RateLimiter::hit($this->throttleKey());
+        Auth::loginUsingId($userID);
+        User::query()->where(['mobile'=>$this->only('mobile')])->update(['mobile_verified_at'=>Carbon::now()]);
 
-            throw ValidationException::withMessages([
-                'email' => trans('auth.failed'),
-            ]);
-        }
+//        if (! Auth::attempt($this->only('email', 'password'), $this->boolean('remember'))) {
+//            RateLimiter::hit($this->throttleKey());
+//
+//            throw ValidationException::withMessages([
+//                'email' => trans('auth.failed'),
+//            ]);
+//        }
 
         RateLimiter::clear($this->throttleKey());
     }

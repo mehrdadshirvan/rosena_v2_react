@@ -22,10 +22,17 @@ class User extends Authenticatable
     public function columns($columns = []): array
     {
         $columns = [
+            'uuid',
             'name',
             'email',
-            'mobil',
+            'email_verified_at',
+            'mobile',
+            'mobile_verified_at',
             'password',
+            'type',
+            'avatar',
+            'is_active',
+            'cart_number',
         ];
         if (!empty($array[0])) {
             $columns = array_merge($columns, $array);

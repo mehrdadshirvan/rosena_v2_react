@@ -20,6 +20,7 @@ Route::middleware('guest')->group(function () {
     Route::get('login', [AuthenticatedSessionController::class, 'create'])
         ->name('login');
 
+    Route::post('sms-validation-code', [\App\Http\Controllers\Auth\AuthenticatedSMSVerificationController::class, 'store'])->name('sms-validation-code');
     Route::post('login', [AuthenticatedSessionController::class, 'store']);
 
     Route::get('forgot-password', [PasswordResetLinkController::class, 'create'])

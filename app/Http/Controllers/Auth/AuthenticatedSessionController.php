@@ -2,8 +2,13 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Constants\UserConstant;
+use App\Constants\VerificationCodeConstant;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\LoginRequest;
+use App\Models\User;
+use App\Models\VerificationCode;
+use Carbon\Carbon;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -29,11 +34,27 @@ class AuthenticatedSessionController extends Controller
      */
     public function store(LoginRequest $request): RedirectResponse
     {
-        $request->authenticate();
+        $auth = User::where('mobile', $request->only('mobile'))->value('id');
 
-        $request->session()->regenerate();
+        $verification_code = VerificationCode::query()
+            ->where(['user_id' => $auth, 'type' => VerificationCodeConstant::TYPE_SMS])
+            ->orderBy('id', 'DESC')->first();
 
-        return redirect()->intended(route('dashboard', absolute: false));
+        if ($verification_code && $verification_code->expired_at > Carbon::now() && $verification_code->expired_at <= Carbon::now()->addMinutes(2) && $request->get('verification_code') == $verification_code->code) {
+            $request->authenticate();
+
+            $request->session()->regenerate();
+
+            $userType = Auth::user()->type;
+            if (in_array($userType,UserConstant::TYPE_OPERATORS_ROLES)) {
+                return redirect()->intended(url('/panel/dashboard'));
+            } else if (in_array($userType, [UserConstant::TYPE_USER])) {
+                return redirect()->intended(url('/profile?section=personal-information'));
+            } else {
+                return redirect()->intended(url('/'))->with('server_messages','Unauthorized');
+            }
+        }
+        return $this->destroy($request);
     }
 
     /**
