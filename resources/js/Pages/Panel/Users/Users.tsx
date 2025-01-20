@@ -1,14 +1,46 @@
 "use client"
 import PanelLayout from "@/Pages/Panel/Layout/PanelLayout";
 import { FaPencil } from "react-icons/fa6";
-import {Link} from "@inertiajs/react";
+import {Link, router} from "@inertiajs/react";
 import PaginationV1 from "@/Components/paginationV1";
+import TextInput from "@/Components/TextInput";
+import SelectInput from "@/Components/SelectInput";
+import Pagination from "@/Components/pagination";
 
-export default function Users({data}: any) {
+export default function Users({auth,data,queryParams = null}: any) {
+
+    queryParams = queryParams || {};
+
+    const searchFieldChanged = (name:any,value:any)=> {
+        value ? queryParams[name] = value : delete queryParams[name];
+        router.get(route('panel.users.index'),queryParams)
+    }
+
+    const setFilter = (name:any,e:any) => {
+       if(e.key !== "Enter") return;
+        searchFieldChanged(name,e.target.value);
+    }
     return (
         <>
             <PanelLayout>
+
                 <div className="card-v2">
+                    <div className="filter mb-6">
+                        <TextInput
+                            placeholder="نام کاربر"
+                            onBlur={e => searchFieldChanged('search', e.target.value)}
+                            onKeyDown={e => setFilter('search', e)}
+                            defaultValue={queryParams.search}
+                        />
+                        <SelectInput
+                            defaultValue={queryParams.type}
+                            onChange={(e) => searchFieldChanged('type',e.target.value)}>
+                            <option value="">All</option>
+                            <option value="user">user</option>
+                            <option value="admin">admin</option>
+                        </SelectInput>
+                    </div>
+
                     <table className="table-v1">
                         <thead className="table-head-v1">
                         <tr className="">
@@ -48,7 +80,7 @@ export default function Users({data}: any) {
                                         </td>
                                         <td className="py-3 px-6">
                                             <Link href={`/panel/users/${item?.id}`}>
-                                                <FaPencil />
+                                                <FaPencil/>
                                             </Link>
                                         </td>
                                     </tr>
@@ -59,7 +91,8 @@ export default function Users({data}: any) {
                     </table>
 
 
-                    <PaginationV1  data={data}/>
+                    {/*<Pagination links={data?.links}/>*/}
+                    <PaginationV1 meta={data?.meta}/>
                 </div>
             </PanelLayout>
         </>

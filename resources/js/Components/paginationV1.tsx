@@ -1,6 +1,6 @@
 import {Link} from "@inertiajs/react";
 
-export default function PaginationV1({data}: any) {
+export default function PaginationV1({meta}: any) {
 
     return (
         <>
@@ -20,11 +20,11 @@ export default function PaginationV1({data}: any) {
                             </div>
                             <p className="text-sm text-gray-700">
                                 نمایش
-                                <span className="font-medium">{data?.from}</span>
+                                <span className="font-medium px-1">{meta?.from}</span>
                                 تا
-                                <span className="font-medium">{data?.to}</span>
+                                <span className="font-medium  px-1">{meta?.to}</span>
                                 از
-                                <span className="font-medium">{data?.total}</span>
+                                <span className="font-medium px-1">{meta?.total}</span>
                                 نتیجه
                             </p>
                         </div>
@@ -32,9 +32,10 @@ export default function PaginationV1({data}: any) {
                             <nav className="isolate inline-flex -space-x-px rounded-md dark:border-gray-700 shadow-sm rtl"
                                  aria-label="Pagination">
                                 {
-                                    Array.isArray(data?.links) && data?.links?.map((item:any) => {
+                                    Array.isArray(meta?.links) && meta?.links?.map((item:any) => {
                                         return (
                                             <Link href={item?.url}
+                                                  preserveScroll
                                                   key={item?.label}
                                                   className={`relative inline-flex items-center px-4 py-2 text-sm font-semibold text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 dark:hover:text-gray-800 focus:z-20 focus:outline-offset-0
 

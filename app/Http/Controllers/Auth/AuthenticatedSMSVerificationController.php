@@ -50,6 +50,7 @@ class AuthenticatedSMSVerificationController extends Controller
                 $save->type = VerificationCodeConstant::TYPE_SMS;
                 $save->save();
 //                FarazSMSController::SendByPattern([$auth->mobile], 'LoginSendVerificationCode', ['verification-code' => $rand]);
+                return Inertia(true);
                 return response_true(true);
             }
             return response_false(['code'=>[__("Code send before")]],__("Code send before"));

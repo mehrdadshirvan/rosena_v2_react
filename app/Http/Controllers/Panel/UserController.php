@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Panel;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\Api\Web\V1\UserResource;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -18,10 +19,12 @@ class UserController extends Controller
     public function index(Request $request)
     {
         $data = User::Filter($request);
+        if($request->has('search')) $data = User::WhereLike($request->get('search'));
         $data = $data->paginate($request->get('limit',10));
 
         return Inertia::render('Panel/Users/Users', [
-            'data' => $data,
+            'data' => UserResource::collection($data),
+            'queryParams' => $request->query() ?: null,
         ]);
     }
 

@@ -15,7 +15,7 @@ class Admin
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (auth()->check() && in_array(auth()->user()->role,['admin','superAdmin'])) {
+        if (auth()->check() && in_array(auth()->user()->type,['admin','superAdmin'])) {
             return $next($request);
         } else {
             abort(403);

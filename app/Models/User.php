@@ -104,8 +104,8 @@ class User extends Authenticatable
         if (!empty($request->gender)) {
             $q->where('gender', $request->gender);
         }
-        if (!empty($request->role)) {
-            $q->where('role', $request->role);
+        if (!empty($request->type)) {
+            $q->where('type', $request->type);
         }
         if (!empty($request->is_active)) {
             $q->where('is_active', $request->is_active);
