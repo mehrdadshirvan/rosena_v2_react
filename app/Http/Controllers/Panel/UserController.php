@@ -10,11 +10,12 @@ use Inertia\Inertia;
 
 class UserController extends Controller
 {
-//    public function __construct()
-//    {
-//        $this->middleware('auth');
-//        parent::__construct();
-//    }
+    protected $feature = 'users';
+    public function __construct()
+    {
+        $this->middleware('auth');
+        parent::__construct();
+    }
 
     public function index(Request $request)
     {

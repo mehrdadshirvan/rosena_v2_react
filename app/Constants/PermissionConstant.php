@@ -30,6 +30,7 @@ class PermissionConstant
     const ROUTE_states          = 'states';
     const ROUTE_roles           = 'roles';
     const ROUTE_users           = 'users';
+    const ROUTE_products           = 'products';
     const ROUTE_medias          = 'medias';
 
 
@@ -44,6 +45,7 @@ class PermissionConstant
         self::ROUTE_states,
         self::ROUTE_roles,
         self::ROUTE_users,
+        self::ROUTE_products,
         self::ROUTE_medias,
         self::ROUTE_tickets,
         self::ROUTE_ticket_message,
