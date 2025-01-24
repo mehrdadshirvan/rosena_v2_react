@@ -1,10 +1,10 @@
 import PanelLayout from "@/Pages/Panel/Layout/PanelLayout";
 
-export default function Dashboard(){
+export default function Users({user}:any){
     return (
         <>
             <PanelLayout>
-                dashboard
+                {user?.name}
             </PanelLayout>
         </>
     )

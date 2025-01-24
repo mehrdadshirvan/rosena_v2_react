@@ -28,9 +28,9 @@ class RoleController extends Controller
      */
     public function index(Request $request)
     {
-        $roles = RoleModel::all();
-        return Inertia::render('Panel/Roles/Index', [
-            'roles' => RoleResource::collection($roles),
+        $data = RoleModel::all();
+        return Inertia::render('Panel/Roles/RolesList', [
+            'data' => RoleResource::collection($data),
         ]);
     }
 
@@ -62,12 +62,12 @@ class RoleController extends Controller
     /**
      * @param $id
      * @param Request $request
-     * @return  view
+     * @return  \Inertia\Response
      */
     public function create(Request $request)
     {
         $permissions = Permission::query()->orderBy('id', 'ASC')->get();
-        return view('panel.role.form', ['permissions'=>$permissions]);
+        return Inertia::render('Panel/Roles/RoleCreate', ['permissions'=>$permissions]);
     }
 
     /**

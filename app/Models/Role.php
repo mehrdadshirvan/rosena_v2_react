@@ -48,6 +48,11 @@ class Role extends \Spatie\Permission\Models\Role
         }
         return $columns;
     }
+    protected $appends = ['show_created_at'];
+
+    public function getShowCreatedAtAttribute(){
+        return !empty($this->created_at) ? Carbon::parse($this->created_at)->format('Y/m/d') : null;
+    }
 
     /**
      * Scope a query to only include popular users.

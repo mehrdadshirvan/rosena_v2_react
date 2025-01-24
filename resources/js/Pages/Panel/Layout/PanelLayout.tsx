@@ -1,15 +1,5 @@
 'use client'
 import { useState, useEffect } from 'react';
-import {
-    Dialog,
-    DialogBackdrop,
-    DialogPanel,
-    Menu,
-    MenuButton,
-    MenuItem,
-    MenuItems,
-    TransitionChild,
-} from '@headlessui/react'
 
 import {PropsWithChildren} from 'react';
 import Header from "@/Pages/Panel/Layout/Include/Header";
@@ -28,6 +18,8 @@ export default function PanelLayout({children}: PropsWithChildren) {
         { name: 'محصولات', href: '/panel/products', current: false },
         { name: 'کامنت ها', href: '/panel/comments', current: false },
         { name: 'تگها', href: '/panel/tags', current: false },
+        { name: 'نقش های کاربری', href: '/panel/roles', current: false },
+        { name: 'سطح دسترسی', href: '/panel/permissions', current: false },
     ]);
 
     useEffect(() => {

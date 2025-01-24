@@ -47,11 +47,11 @@ class AuthenticatedSessionController extends Controller
 
             $userType = Auth::user()->type;
             if (in_array($userType,UserConstant::TYPE_OPERATORS_ROLES)) {
-                return redirect()->intended(url('/panel/dashboard'));
+                return redirect(url('/panel/dashboard'));
             } else if (in_array($userType, [UserConstant::TYPE_USER])) {
-                return redirect()->intended(url('/'));
+                return redirect(url('/'));
             } else {
-                return redirect()->intended(url('/'))->with('server_messages','Unauthorized');
+                return redirect()->back()->with('server_messages','Unauthorized');
             }
         }
         return $this->destroy($request);
